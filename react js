@@ -1,0 +1,92 @@
+1) How to Pass data from one component to another Component in react jS .
+
+import React, { useState } from "react";
+import "./Navbar.css"; 
+const Navbar = () => {
+  const [bgColor, setBgColor] = useState("blue"); 
+  const changeColor = (color) => {
+    setBgColor(color);
+  };
+  return (
+    <div>
+      <nav className="navbar" style={{ backgroundColor: bgColor }}>
+        <h1 className="navbar-title">My Navbar</h1>
+        <div className="button-group">
+          <button onClick={() => changeColor("red")}>Red</button>
+          <button onClick={() => changeColor("green")}>Green</button>
+          <button onClick={() => changeColor("blue")}>Blue</button>
+        </div>
+      </nav>
+    </div>
+  );
+};
+export default Navbar;
+
+
+2) How to creato  Count down timer in react Js
+
+import React, { useState, useEffect } from 'react';
+const CountdownTimer = ({ initialTime }) => {
+  const [timeLeft, setTimeLeft] = useState(initialTime);
+  useEffect(() => {
+    if (timeLeft === 0) return;
+    const intervalId = setInterval(() => {
+      setTimeLeft((prevTime) => prevTime - 1);
+    }, 1000);
+    return () => clearInterval(intervalId);
+  }, [timeLeft]);
+  return (
+    <div>
+      <h1>Countdown: {timeLeft} seconds</h1>
+      {timeLeft === 0 && <h2>Time's up!</h2>}
+    </div>
+  );
+};
+export default function App() {
+  return (
+    <div>
+      <CountdownTimer initialTime={10} /> {/* Starting countdown from 10 seconds */}
+    </div>
+  );
+}
+
+
+3) How to change nevegation bar colour in react js
+
+import React, { useState } from "react";
+const ParentComponent = () => {
+  const [parentData, setParentData] = useState("Data from Parent"); 
+  const handleDataChange = (newData) => {
+    setParentData(newData);
+  };
+  return (
+    <div>
+      <h1>Parent Component</h1>
+      <p>{parentData}</p>
+      {/* Pass data and callback to Child */}
+      <ChildComponent parentData={parentData} onChangeData={handleDataChange} />
+    </div>
+  );
+};
+const ChildComponent = ({ parentData, onChangeData }) => {
+  const [childData, setChildData] = useState("Data from Child"); // State in Child
+  const handleInputChange = (e) => {
+    setChildData(e.target.value);
+    onChangeData(e.target.value); // Send updated data to Parent
+  };
+  return (
+    <div>
+      <h1>Child Component</h1>
+      <p>{parentData}</p>
+      <input
+        type="text"
+        value={childData}
+        onChange={handleInputChange}
+        placeholder="Enter data to send to Parent"
+      />
+    </div> 
+ );
+};
+export default ParentComponent;
+
+
